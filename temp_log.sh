@@ -1,33 +1,10 @@
 #!/bin/bash 
-# Log temperature over some time  interval given as days, hours, minutes or seconds.
-# enter the variables according to your usage in the following seciton :
-duration="$1"  #duration format is  ndnhnmns where n is some number and d is day,
-# h is hours, m is minutes and s is seconds. For example, 4d , 4d5h30m , 5m30s, 6h30m30s are all valid.
-
-step="$2"
+# Log temperature over some time using this script run as cron job.
+# Set your interval given as days, hours, minutes or seconds as the cron job itself.
 #----------------------------------------------------------------------
-#starting time taken as current
-dt=$(date '+%Y-%m-%dT%H:%M:%S');
-#et=$(date '+%Y-%m-%dT%H:%M:%S');
+#output will be a txt file `t_log.txt` which will have n columns for n cores and day and time.
 
-#----------------------------------------------------------------------
-a=$(dateutils.dadd $dt  $duration )
-b=$(dateutils.ddiff $dt $a -f '%S')
-echo $a $b
-
-ntimes=$((b/step))
-echo $ntimes
-
-
-echo "logging...";
-rm t_log.txt
-nms=0
-while [  $nms -lt $ntimes ];  do
         sensors | grep -A 0  'Core' | cut -c18-21 |tr "\n" "\t" >> temp.txt
-        let nms=nms+1
-        sleep  $step
-        now=$(date +"%m/%d/%Y %T")
-#       echo $now
+        now=$(date +"%m/%d/%Y %T") #modify as your need.
         echo -e "$(cat temp.txt)""\t$now"  >> t_log.txt
         rm temp.txt
-done
