@@ -5,7 +5,7 @@ These are some general bash scripts for automating daily tasks
 - removes non-useful applications
 - installs applications required for scientific requirements
 - installs OpenSSH and sets up basic settings
-- reduces system's tendency to 
+- reduces system's tendency to swap ( reduces swappiness)
 - prints out the systems hardware information.
 
 2. temp_log.sh
