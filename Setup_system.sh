@@ -1,6 +1,6 @@
 #!/bin/bash
 #Author=Ankit Raj
-#Script to install applications automatically in Ubuntu 16.04 for calculation environment
+#Script to install applications automatically in Ubuntu for a typical research / scientifica analysis/ calculation environment.
 # and remove unnecessary applications.
 
 echo "==========-----SYSTEM SETUP AND OPTIMIZATION SCRIPT ------=========="
@@ -16,7 +16,7 @@ echo "Removing packages..."
 echo ""
 #REMOVING NON-USEFUL PACKAGES
 
-sudo apt-get remove gnome-orca thunderbird -y
+sudo apt-get remove gnome-orca -y
 sudo apt-get autoremove indicator-messages -y
 sudo apt-get autoremove telepathy-indicator -y
 sudo apt-get autoremove deja-dup -y
@@ -79,7 +79,6 @@ printf "\n vm.swappiness = 10" >>  /etc/sysctl.conf
 #echo "Swappiness changed to : " cat /proc/sys/vm/swappiness   # will change only after reboot
 echo ""
 echo "------------------------------------------------------------"
-echo ""
 echo "SSH optimization started."
 echo ""
 # SSH optimimization
@@ -112,13 +111,13 @@ and conditions of use. LOG OFF IMMEDIATELY if you do not agree to the
 conditions stated in this warning otherwise you will be destroyed !
 
 ****************************************************************************
-                            evil @ USILab
+                           Gandalf, the white           
 ****************************************************************************" >>   /etc/issue.net
 sudo service ssh restart
 echo ""
 echo "------------------------------------------------------------"
 echo ""
-echo "File system."
+echo "File system. Removing Public, Music and Templates folder."
 sudo rm -rf ~/Public*
 sudo rm -rf ~/Music
 sudo rm -rf ~/Templ*
@@ -131,16 +130,16 @@ echo ""
 echo "-----------------------SYSTEM INFO--------------------------"
 echo ""
 
-echo "CPU **************************"
+echo "CPU **********************************************************"
 echo "__________________________________"
 lscpu
 echo "__________________________________"
-echo "MEMORY  **************************"
+echo "MEMORY **********************************************************"
 echo "__________________________________"
 sudo lshw -short -C memory
 
 echo "__________________________________"
-echo "STORAGE  **************************"
+echo "STORAGE **********************************************************"
 echo "__________________________________"
 df  -h
 echo ""
@@ -149,7 +148,7 @@ sudo update-pciids
 #echo "PCI DEVICES  *********************"
 #lspci -v | less
 echo "__________________________________"
-echo "NETWORK  **************************"
+echo "NETWORK **********************************************************"
 echo "__________________________________"
 ifconfig
 #selecting ethernet from available connections
