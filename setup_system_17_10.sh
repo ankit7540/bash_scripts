@@ -53,7 +53,7 @@ sudo apt install -f python-tk x11vnc  -y # x11vnc installed here
 sudo apt install -f unity-tweak-tool -y
 sudo apt install -f default-jre -y
 sudo apt install -f  avogadro-data  avogadro-dbg    libavogadro-dev    libavogadro1    python-avogadro   -y
-sudo apt install -f jmol  jmol-applet   libjmol-java   libjmol-java-doc   -y
+sudo apt install -f jmol  jmol-applet   libjmol-java   libjmol-java-doc net-tools  -y
 #gksudo bum
 
 echo ""
