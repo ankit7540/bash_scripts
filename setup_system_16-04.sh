@@ -1,6 +1,6 @@
 #!/bin/bash
 #Author=Ankit Raj
-#Script to install applications automatically in Ubuntu for a typical research / scientifica analysis/ calculation environment.
+#Script to install applications automatically in Ubuntu 16.04 for a typical research / scientifi analysis/ calculation environment.
 # and remove unnecessary applications.
 
 echo "==========-----SYSTEM SETUP AND OPTIMIZATION SCRIPT ------=========="
