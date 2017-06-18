@@ -3,7 +3,7 @@
 #Script to install applications automatically in Ubuntu 17.04 for a typical research / scientific analysis/ calculation environment.
 # and remove unnecessary applications.
 
-echo "==========-----SYSTEM SETUP AND OPTIMIZATION SCRIPT ------=========="
+echo "==========-----SYSTEM SETUP AND OPTIMIZATION SCRIPT for 17.04 ------=========="
 echo ""
 echo "Updating and upgrading"
 echo ""
@@ -13,14 +13,14 @@ echo ""
 echo "------------------------------------------------------------"
 echo ""
 echo "Removing packages..."
-echo ""
+#echo ""
 #REMOVING NON-USEFUL PACKAGES
 
-sudo apt-get remove gnome-orca -y
-sudo apt-get autoremove indicator-messages -y
-sudo apt-get autoremove telepathy-indicator -y
-sudo apt-get autoremove deja-dup -y
-sudo apt-get autoremove ubuntuone-client python-ubuntuone-control-panel -y
+#sudo apt-get remove gnome-orca -y
+#sudo apt-get autoremove indicator-messages -y
+#sudo apt-get autoremove telepathy-indicator -y
+#sudo apt-get autoremove deja-dup -y
+#sudo apt-get autoremove ubuntuone-client python-ubuntuone-control-panel -y
 
 #fonts
 sudo apt remove --purge fonts-tlwg-kinnari-ttf  fonts-tlwg-laksaman      fonts-tlwg-laksaman-ttf fonts-tlwg-sawasdee-ttf        fonts-tlwg-sawasdee fonts-guru-extra fonts-guru           -y
@@ -70,9 +70,7 @@ echo ""
 echo "------------------------------------------------------------"
 echo ""
 echo "SYSTEM OPTIMIZATION SECTION"
-echo "lightdm -- Guest user removed."
-sudo sh -c "echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf"
-
+echo ""
 echo ""
 echo "Swappiness changed to 10"
 printf "\n vm.swappiness = 10" >>  /etc/sysctl.conf
@@ -85,11 +83,11 @@ echo ""
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup #backup
 sudo sed -i 's/AllowTcpForwarding yes/AllowTcpForwarding no/g' /etc/ssh/sshd_config
 #sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config
-sudo sed -i 's/Port*/Port 22050/g' /etc/ssh/sshd_config # does not work (check to verify)
+sudo sed -i 's/Port*/Port 22060/g' /etc/ssh/sshd_config # does not work (check to verify)
 sudo printf "\n GatewayPorts no" >>  /etc/ssh/sshd_config
 sudo printf "\n ClientAliveCountMax 3" >>  /etc/ssh/sshd_config
 sudo printf "\n ClientAliveInterval 30" >>  /etc/ssh/sshd_config
-sudo printf "\n AllowUsers vayu" >>  /etc/ssh/sshd_config
+sudo printf "\n AllowUsers vani" >>  /etc/ssh/sshd_config
 #printf "\n PasswordAuthentication no" >>  /etc/ssh/sshd_config
 sudo ufw limit ssh # limit connection to SSH port
 sudo sed -i 's/#Banner /etc/issue.net/Banner /etc/issue.net/g' /etc/ssh/sshd_config
@@ -111,7 +109,7 @@ and conditions of use. LOG OFF IMMEDIATELY if you do not agree to the
 conditions stated in this warning otherwise you will be destroyed !
 
 ****************************************************************************
-                           Gandalf, the white           
+                              System admin           
 ****************************************************************************" >>   /etc/issue.net
 sudo service ssh restart
 echo ""
