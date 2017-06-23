@@ -87,6 +87,9 @@ sudo ufw limit ssh # limit connection to SSH port
 sudo printf "#***************************************************************************
         # Custom settings for OpenSSH server 
         # A default file exists here '/etc/ssh/sshd_config.backup'
+
+StrictModes yes
+PermitEmptyPasswords no
 AllowTcpForwarding no
 Port 22070
 AllowUsers vani
@@ -94,6 +97,8 @@ ClientAliveInterval 30
 ClientAliveCountMax 3
 GatewayPorts no        
 Banner /etc/issue.net/Banner
+IgnoreRhosts yes
+LogLevel INFO
 #****************************************************************************" >>   /etc/ssh/sshd_config
 
 # setting up the banner for SSH
