@@ -94,9 +94,9 @@ ClientAliveInterval 30
 ClientAliveCountMax 3
 GatewayPorts no        
 Banner /etc/issue.net/Banner
-#****************************************************************************" >>   /etc/issue.net
+#****************************************************************************" >>   /etc/ssh/sshd_config
 
-
+# setting up the banner for SSH
 printf "***************************************************************************
                             NOTICE TO USERS
 
