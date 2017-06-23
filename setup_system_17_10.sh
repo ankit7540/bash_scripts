@@ -81,16 +81,21 @@ echo "SSH optimization started."
 echo ""
 # SSH optimimization
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup #backup
-sudo sed -i 's/AllowTcpForwarding yes/AllowTcpForwarding no/g' /etc/ssh/sshd_config
-#sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config
-sudo sed -i 's/Port*/Port 22060/g' /etc/ssh/sshd_config # does not work (check to verify)
-sudo printf "\n GatewayPorts no" >>  /etc/ssh/sshd_config
-sudo printf "\n ClientAliveCountMax 3" >>  /etc/ssh/sshd_config
-sudo printf "\n ClientAliveInterval 30" >>  /etc/ssh/sshd_config
-sudo printf "\n AllowUsers vani" >>  /etc/ssh/sshd_config
-#printf "\n PasswordAuthentication no" >>  /etc/ssh/sshd_config
 sudo ufw limit ssh # limit connection to SSH port
-sudo sed -i 's/#Banner /etc/issue.net/Banner /etc/issue.net/g' /etc/ssh/sshd_config
+
+# Generating a custom sshd config file
+sudo printf "#***************************************************************************
+        # Custom settings for OpenSSH server 
+        # A default file exists here '/etc/ssh/sshd_config.backup'
+AllowTcpForwarding no
+Port 22070
+AllowUsers vani
+ClientAliveInterval 30
+ClientAliveCountMax 3
+GatewayPorts no        
+Banner /etc/issue.net/Banner
+#****************************************************************************" >>   /etc/issue.net
+
 
 printf "***************************************************************************
                             NOTICE TO USERS
