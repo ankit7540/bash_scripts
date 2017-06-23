@@ -37,7 +37,7 @@ echo ""
 #START INSTALLATION OF NECESSARY PACKAGES
 
 sudo apt install make cmake htop -y
-sudo apt-get install --dry-run bum openssh-server  build-essential  libfftw3-3 libfftw3-bin  libfftw3-dbg libfftw3-dev libfftw3-doc libfftw3-double3  libfftw3-long3  libfftw3-quad3  libfftw3-single3
+sudo apt-get install --dry-run bum openssh-server  build-essential g++ libfftw3-3 libfftw3-bin  libfftw3-dbg libfftw3-dev libfftw3-doc libfftw3-double3  libfftw3-long3  libfftw3-quad3  libfftw3-single3
 # sudo nano  /etc/ssh/sshd_config
 sudo apt install -f bum openssh-server build-essential filezilla  msttcorefonts faac faad -y
 sudo apt install -f liblapack-dev liblapack-doc  liblapack-doc-man  liblapack-pic  liblapack-test  liblapack3  liblapack3gf  liblapacke  liblapacke-dev  -y
@@ -50,8 +50,8 @@ sudo apt install -f stress tmux -y
 sudo apt install -f compizconfig-settings-manager -y
 sudo apt install -f libatlas-base-dev  libatlas-dev  libatlas-doc  libatlas-test libatlas3-base -y
 sudo apt install -f python-tk x11vnc  -y # x11vnc installed here
-sudo apt install -f unity-tweak-tool -y
-sudo apt install -f default-jre -y
+# sudo apt install -f unity-tweak-tool -y
+sudo apt install -f default-jre    filezilla -y
 sudo apt install -f  avogadro-data  avogadro-dbg    libavogadro-dev    libavogadro1    python-avogadro   -y
 sudo apt install -f jmol  jmol-applet   libjmol-java   libjmol-java-doc net-tools  -y
 #gksudo bum
@@ -72,33 +72,43 @@ echo ""
 echo "SYSTEM OPTIMIZATION SECTION"
 echo ""
 echo ""
-echo "Swappiness changed to 10"
-printf "\n vm.swappiness = 10" >>  /etc/sysctl.conf
+echo "Swappiness changed to 6"
+printf "\n vm.swappiness = 6" >>  /etc/sysctl.conf
 #echo "Swappiness changed to : " cat /proc/sys/vm/swappiness   # will change only after reboot
 echo ""
 echo "------------------------------------------------------------"
 echo "SSH optimization started."
 echo ""
 # SSH optimimization
-sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup #backup
+sudo cp /etc/ssh/sshd_config   /etc/ssh/sshd_config.backup #backup
 sudo ufw limit ssh # limit connection to SSH port
 
 # Generating a custom sshd config file
 sudo printf "#***************************************************************************
         # Custom settings for OpenSSH server 
         # A default file exists here '/etc/ssh/sshd_config.backup'
-
-StrictModes yes
-PermitEmptyPasswords no
-AllowTcpForwarding no
-Port 22070
-AllowUsers vani
-ClientAliveInterval 30
-ClientAliveCountMax 3
-GatewayPorts no        
-Banner /etc/issue.net/Banner
+Port 24343  # configure port forwarding sccordingly
+#ListenAddress 192.168.1.1
+#HostKey /etc/ssh/ssh_host_key
+ServerKeyBits 1024
+LoginGraceTime 30
+KeyRegenerationInterval 3600
+PermitRootLogin no
 IgnoreRhosts yes
+IgnoreUserKnownHosts yes
+StrictModes yes
+X11Forwarding no
+#PrintMotd yes
+SyslogFacility AUTH
 LogLevel INFO
+RhostsAuthentication no
+RhostsRSAAuthentication no
+RSAAuthentication yes
+PasswordAuthentication yes
+PermitEmptyPasswords no
+AllowUsers admin
+
+Banner /etc/issue.net
 #****************************************************************************" >>   /etc/ssh/sshd_config
 
 # setting up the banner for SSH
