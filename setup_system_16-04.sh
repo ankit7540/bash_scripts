@@ -64,22 +64,25 @@ echo ""
 sudo apt-get autoclean
 sudo apt-get autoremove
 
-echo ""
-#SYSTEM OPTIMIZATION
-echo ""
-echo "------------------------------------------------------------"
-echo ""
-echo "SYSTEM OPTIMIZATION SECTION"
-echo "lightdm -- Guest user removed."
-sudo sh -c "echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf"
+#-----------------------------------------------------------------------
 
-echo ""
-echo "Swappiness changed to 10"
-printf "\n vm.swappiness = 10" >>  /etc/sysctl.conf
-#echo "Swappiness changed to : " cat /proc/sys/vm/swappiness   # will change only after reboot
-echo ""
-echo "------------------------------------------------------------"
-echo "SSH optimization started."
+read -r -p "Do want to optimize swappiness ? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+    printf "\n vm.swappiness = 10" >>  /etc/sysctl.conf
+    echo "Swappiness changed."
+else
+    echo "Swappiness not changed"
+    echo -e ""
+fi
+
+#-----------------------------------------------------------------------
+
+read -r -p "Do want to setup SSH  ? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+    echo "------------------------------------------------------------"
+echo "OpenSSH optimization started."
 echo ""
 # SSH optimimization
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup #backup
@@ -92,7 +95,7 @@ sudo printf "\n ClientAliveInterval 30" >>  /etc/ssh/sshd_config
 sudo printf "\n AllowUsers vayu" >>  /etc/ssh/sshd_config
 #printf "\n PasswordAuthentication no" >>  /etc/ssh/sshd_config
 sudo ufw limit ssh # limit connection to SSH port
-sudo sed -i 's/#Banner /etc/issue.net/Banner /etc/issue.net/g' /etc/ssh/sshd_config
+sudo sed -i 's/#Banner /etc/issue.net /etc/issue.net/g' /etc/ssh/sshd_config
 
 printf "***************************************************************************
                             NOTICE TO USERS
@@ -113,7 +116,18 @@ conditions stated in this warning otherwise you will be destroyed !
 ****************************************************************************
                            Gandalf, the white           
 ****************************************************************************" >>   /etc/issue.net
+
+echo -e "restarting OpenSSH"
 sudo service ssh restart
+echo -e ""
+else
+    echo "OpenSSH settings not changed."
+    echo -e ""
+fi
+
+
+#-----------------------------------------------------------------------
+
 echo ""
 echo "------------------------------------------------------------"
 echo ""
