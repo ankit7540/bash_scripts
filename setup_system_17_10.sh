@@ -67,71 +67,66 @@ sudo apt-get autoremove
 echo ""
 #SYSTEM OPTIMIZATION
 echo ""
-echo "------------------------------------------------------------"
-echo ""
-echo "SYSTEM OPTIMIZATION SECTION"
-echo ""
-echo ""
-echo "Swappiness changed to 6"
-printf "\n vm.swappiness = 6" >>  /etc/sysctl.conf
-#echo "Swappiness changed to : " cat /proc/sys/vm/swappiness   # will change only after reboot
-echo ""
-echo "------------------------------------------------------------"
-echo "SSH optimization started."
+#-----------------------------------------------------------------------
+
+read -r -p "Do want to optimize swappiness ? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+    printf "\n vm.swappiness = 10" >>  /etc/sysctl.conf
+    echo "Swappiness changed."
+else
+    echo "Swappiness not changed"
+    echo -e ""
+fi
+
+#-----------------------------------------------------------------------
+
+read -r -p "Do want to setup SSH  ? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+    echo "------------------------------------------------------------"
+echo "OpenSSH optimization started."
 echo ""
 # SSH optimimization
-sudo cp /etc/ssh/sshd_config   /etc/ssh/sshd_config.backup #backup
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup #backup
+sudo sed -i 's/AllowTcpForwarding yes/AllowTcpForwarding no/g' /etc/ssh/sshd_config
+#sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config
+sudo sed -i 's/Port*/Port 22050/g' /etc/ssh/sshd_config # does not work (check to verify)
+sudo printf "\n GatewayPorts no" >>  /etc/ssh/sshd_config
+sudo printf "\n ClientAliveCountMax 3" >>  /etc/ssh/sshd_config
+sudo printf "\n ClientAliveInterval 30" >>  /etc/ssh/sshd_config
+sudo printf "\n AllowUsers vayu" >>  /etc/ssh/sshd_config
+#printf "\n PasswordAuthentication no" >>  /etc/ssh/sshd_config
 sudo ufw limit ssh # limit connection to SSH port
+sudo sed -i 's/#Banner /etc/issue.net /etc/issue.net/g' /etc/ssh/sshd_config
 
-# Generating a custom sshd config file
-sudo printf "#***************************************************************************
-        # Custom settings for OpenSSH server 
-        # A default file exists here '/etc/ssh/sshd_config.backup'
-Port 24343  # configure port forwarding sccordingly
-#ListenAddress 192.168.1.1
-#HostKey /etc/ssh/ssh_host_key
-ServerKeyBits 1024
-LoginGraceTime 30
-KeyRegenerationInterval 3600
-PermitRootLogin no
-IgnoreRhosts yes
-IgnoreUserKnownHosts yes
-StrictModes yes
-X11Forwarding no
-#PrintMotd yes
-SyslogFacility AUTH
-LogLevel INFO
-RhostsAuthentication no
-RhostsRSAAuthentication no
-RSAAuthentication yes
-PasswordAuthentication yes
-PermitEmptyPasswords no
-AllowUsers admin
-
-Banner /etc/issue.net
-#****************************************************************************" >>   /etc/ssh/sshd_config
-
-# setting up the banner for SSH
 printf "***************************************************************************
                             NOTICE TO USERS
-
-
 This computer system is the private property of its owner, whether
 individual, corporate or government.  It is for authorized use only.
 Users (authorized or unauthorized) have no explicit or implicit
 expectation of privacy.
-
   Unauthorized or improper use
 of this system may result in civil and criminal penalties and
 administrative or disciplinary action, as appropriate. By continuing to
 use this system you indicate your awareness of and consent to these terms
 and conditions of use. LOG OFF IMMEDIATELY if you do not agree to the
 conditions stated in this warning otherwise you will be destroyed !
-
 ****************************************************************************
-                              System admin           
+                           Gandalf, the white           
 ****************************************************************************" >>   /etc/issue.net
+
+echo -e "restarting OpenSSH"
 sudo service ssh restart
+echo -e ""
+else
+    echo "OpenSSH settings not changed."
+    echo -e ""
+fi
+
+
+#-----------------------------------------------------------------------
+
 echo ""
 echo "------------------------------------------------------------"
 echo ""
