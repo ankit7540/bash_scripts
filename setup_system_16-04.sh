@@ -1,6 +1,6 @@
 #!/bin/bash
 #Author=Ankit Raj
-#Script to install applications automatically in Ubuntu 16.04 for a typical research / scientifi analysis/ calculation environment.
+#Script to install applications automatically in Ubuntu 16.04 for a typical research / scientific analysis/ calculation environment.
 # and remove unnecessary applications.
 
 echo "==========-----SYSTEM SETUP AND OPTIMIZATION SCRIPT ------=========="
@@ -17,10 +17,10 @@ echo ""
 #REMOVING NON-USEFUL PACKAGES
 
 sudo apt-get remove gnome-orca -y
-sudo apt-get autoremove indicator-messages -y
-sudo apt-get autoremove telepathy-indicator -y
-sudo apt-get autoremove deja-dup -y
-sudo apt-get autoremove ubuntuone-client python-ubuntuone-control-panel -y
+#sudo apt-get autoremove indicator-messages -y
+#sudo apt-get autoremove telepathy-indicator -y
+#sudo apt-get autoremove deja-dup -y
+#sudo apt-get autoremove ubuntuone-client python-ubuntuone-control-panel -y
 
 #fonts
 sudo apt remove --purge fonts-tlwg-kinnari-ttf  fonts-tlwg-laksaman      fonts-tlwg-laksaman-ttf fonts-tlwg-sawasdee-ttf        fonts-tlwg-sawasdee fonts-guru-extra fonts-guru           -y
@@ -53,7 +53,7 @@ sudo apt install -f python-tk x11vnc  -y # x11vnc installed here
 sudo apt install -f unity-tweak-tool -y
 sudo apt install -f default-jre -y
 sudo apt install -f  avogadro-data  avogadro-dbg    libavogadro-dev    libavogadro1    python-avogadro   -y
-sudo apt install -f jmol  jmol-applet   libjmol-java   libjmol-java-doc  net-tools  -y
+sudo apt install -f jmol  jmol-applet   libjmol-java   libjmol-java-doc  net-tools sysstat  -y
 #gksudo bum
 
 echo ""
@@ -88,14 +88,14 @@ echo ""
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup #backup
 sudo sed -i 's/AllowTcpForwarding yes/AllowTcpForwarding no/g' /etc/ssh/sshd_config
 #sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config
-sudo sed -i 's/Port*/Port 22050/g' /etc/ssh/sshd_config # does not work (check to verify)
+sudo sed -i 's/Port 22*/Port 22050/g' /etc/ssh/sshd_config # does not work (check to verify)
 sudo printf "\n GatewayPorts no" >>  /etc/ssh/sshd_config
 sudo printf "\n ClientAliveCountMax 3" >>  /etc/ssh/sshd_config
 sudo printf "\n ClientAliveInterval 30" >>  /etc/ssh/sshd_config
 sudo printf "\n AllowUsers vayu" >>  /etc/ssh/sshd_config
 #printf "\n PasswordAuthentication no" >>  /etc/ssh/sshd_config
 sudo ufw limit ssh # limit connection to SSH port
-sudo sed -i 's/#Banner /etc/issue.net /etc/issue.net/g' /etc/ssh/sshd_config
+sudo sed -i 's/Banner /etc/issue.net /etc/issue.net/g' /etc/ssh/sshd_config
 
 printf "***************************************************************************
                             NOTICE TO USERS
