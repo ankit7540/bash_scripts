@@ -63,12 +63,13 @@ echo "Cleaning up..."
 echo ""
 sudo apt-get autoclean
 sudo apt-get autoremove
-
 echo ""
 #SYSTEM OPTIMIZATION
 echo ""
 #-----------------------------------------------------------------------
-
+echo ""
+echo "----- SYSTEM OPTIMIZATION -----"
+echo ""
 read -r -p "Do want to optimize swappiness ? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
