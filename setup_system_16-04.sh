@@ -99,8 +99,6 @@ sudo sed -i 's/Banner /etc/issue.net /etc/issue.net/g' /etc/ssh/sshd_config
 
 printf "***************************************************************************
                             NOTICE TO USERS
-
-
 This computer system is the private property of its owner, whether
 individual, corporate or government.  It is for authorized use only.
 Users (authorized or unauthorized) have no explicit or implicit
@@ -112,9 +110,8 @@ administrative or disciplinary action, as appropriate. By continuing to
 use this system you indicate your awareness of and consent to these terms
 and conditions of use. LOG OFF IMMEDIATELY if you do not agree to the
 conditions stated in this warning otherwise you will be destroyed !
-
 ****************************************************************************
-                           Gandalf, the white           
+                              System admin            
 ****************************************************************************" >>   /etc/issue.net
 
 echo -e "restarting OpenSSH"
