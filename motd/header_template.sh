@@ -1,6 +1,7 @@
 #!/bin/sh
 # MODIFIED header file : Ankit Raj
 # ----------------------------------------------
+echo ""
 [ -r /etc/lsb-release ] && . /etc/lsb-release
 
 if [ -z "$DISTRIB_DESCRIPTION" ] && [ -x /usr/bin/lsb_release ]; then
@@ -19,4 +20,5 @@ out1=$( echo "  $cpu", "$cores" "cores" )
 out2=$( echo "  Memory usage :" "$memused"/"$memtotal" "M" "("$memusedper"%)"  )
 echo "  "$out1
 echo "  "$out2
+echo ""
 # ----------------------------------------------
